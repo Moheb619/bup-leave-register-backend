@@ -13,12 +13,18 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'full_name' => 'required',
-            'contact' => 'required|unique:App\Models\User',
+            'id_number' => 'required|unique:App\Models\User',
+            'gender' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'age' => 'required',
             'email' => 'required|email|unique:App\Models\User',
+            'contact' => 'required|unique:App\Models\User',
+            'profile' => 'required',
+            'department' => 'required',
+            'designation' => 'required',
             'user_name' => 'required|unique:App\Models\User',
-            'password' => 'required',
-            'user_category' => 'required'
+            'password' => 'required'
         ]);
 
         if ($validator->fails()) {
