@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('designation');
             $table->string('user_name')->unique();
             $table->string('password');
-            $table->string('user_category');
             $table->rememberToken();
             $table->timestamps();
         });

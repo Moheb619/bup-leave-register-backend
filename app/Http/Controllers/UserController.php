@@ -62,11 +62,11 @@ class UserController extends Controller
 
     public function all_user()
     {
-        $users = User::all();
+        $user = User::all();
         return response()->json([
-            "message" => "User Fetch Successful",
-            "user" => $users
-        ], 200);
+            'message' => 'User Fetch Successful',
+            'user' => $user,
+        ]);
     }
     public function delete_user($id)
     {
