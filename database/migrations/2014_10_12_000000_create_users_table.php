@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('age');
             $table->string('email')->unique();
             $table->string('contact')->unique();
-            $table->string('profile')->unique();
+            $table->string('profile');
             $table->string('department');
             $table->string('designation');
             $table->string('user_name')->unique();

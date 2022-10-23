@@ -20,7 +20,7 @@ class UserController extends Controller
             'age' => 'required',
             'email' => 'required|email|unique:App\Models\User',
             'contact' => 'required|unique:App\Models\User',
-            'profile' => 'required',
+            'profile' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             'department' => 'required',
             'designation' => 'required',
             'user_name' => 'required|unique:App\Models\User',
@@ -31,16 +31,19 @@ class UserController extends Controller
             return response()->json($validator->errors());
         }
 
+        $profile_image_path = $request->file('profile')->store('profile_image', 'public');
+
         $input = $request->all();
+        $input["profile"] = $profile_image_path;
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] =  $user->createToken('BUPLEAVEREGISTERBYMOHEB')->plainTextToken;
-        $success['full_name'] =  $user->name;
+        $success['full_name'] =  $user->first_name . " " . $user->last_name;
 
         return response()->json([
-            "status" => "User Registered Successfully",
+            "success" => "User Registered Successfully",
             "message" => $success
-        ], 200);
+        ]);
     }
 
     // Login
