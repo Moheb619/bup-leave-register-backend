@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Department;
+use App\Models\Designation;
 
 class User extends Authenticatable
 {
@@ -27,8 +29,8 @@ class User extends Authenticatable
         'email',
         'contact',
         'profile',
-        'department',
-        'designation',
+        'department_id',
+        'designation_id',
         'user_name',
         'password',
     ];
@@ -51,4 +53,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function department()
+    // {
+    //     return $this->belongsTo(Department::class);
+    // }
+    // public function designation()
+    // {
+    //     return $this->belongsTo(Designation::class);
+    // }
 }

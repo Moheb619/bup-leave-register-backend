@@ -13,22 +13,26 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->string('id_number')->primary();
-            $table->string('gender');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->integer('age');
-            $table->string('email')->unique();
-            $table->string('contact')->unique();
-            $table->string('profile');
-            $table->string('department');
-            $table->string('designation');
-            $table->string('user_name')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
+                $table->id();
+                $table->string('gender');
+                $table->string('first_name');
+                $table->string('last_name');
+                $table->integer('age');
+                $table->string('email')->unique();
+                $table->string('contact')->unique();
+                $table->string('profile');
+                $table->integer('department_id')->unsigned();
+                $table->foreign('department_id')->on('id')->references('departments');
+                // $table->foreignId('departments')->constrained();
+                $table->integer('designation_id');
+                $table->string('user_name')->unique();
+                $table->string('password');
+                $table->rememberToken();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

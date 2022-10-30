@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('login', [UserController::class, 'login']);
-Route::post('register', [UserController::class, 'register']);
-Route::get('all_user', [UserController::class, 'all_user']);
-Route::delete('delete_user/{id}', [UserController::class, 'delete_user']);
+// Route::post('login', [UserController::class, 'login']);
+// Route::post('register', [UserController::class, 'register']);
+// Route::get('all_user', [UserController::class, 'all_user']);
+// Route::delete('delete_user/{id}', [UserController::class, 'delete_user']);
