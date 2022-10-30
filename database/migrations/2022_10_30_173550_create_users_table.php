@@ -23,10 +23,8 @@ return new class extends Migration
                 $table->string('email')->unique();
                 $table->string('contact')->unique();
                 $table->string('profile');
-                $table->integer('department_id')->unsigned();
-                $table->foreign('department_id')->on('id')->references('departments');
-                // $table->foreignId('departments')->constrained();
-                $table->integer('designation_id');
+                $table->foreignId('department_id')->constrained();
+                $table->foreignId('designation_id')->constrained();
                 $table->string('user_name')->unique();
                 $table->string('password');
                 $table->rememberToken();

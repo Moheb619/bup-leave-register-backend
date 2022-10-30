@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Designation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +23,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:App\Models\User',
             'contact' => 'required|unique:App\Models\User',
             'profile' => 'required|image|mimes:jpg,png,jpeg|max:2048',
-            'department' => 'required',
-            'designation' => 'required',
+            'department_id' => 'required',
+            'designation_id' => 'required',
             'user_name' => 'required|unique:App\Models\User',
             'password' => 'required'
         ]);
@@ -67,7 +69,6 @@ class UserController extends Controller
     {
         $user = User::all();
         return response()->json([
-            'message' => 'User Fetch Successful',
             'user' => $user,
         ]);
     }
@@ -83,5 +84,22 @@ class UserController extends Controller
         } else {
             return "Delete Failed";
         }
+    }
+
+    public function department_user()
+    {
+        $user = Department::find(1)->users;
+
+        return response()->json([
+            'user' => $user,
+        ], 200);
+    }
+    public function designation_user()
+    {
+        $user = Designation::find(1)->users;
+
+        return response()->json([
+            'user' => $user,
+        ], 200);
     }
 }

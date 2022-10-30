@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// Route::post('login', [UserController::class, 'login']);
-// Route::post('register', [UserController::class, 'register']);
-// Route::get('all_user', [UserController::class, 'all_user']);
-// Route::delete('delete_user/{id}', [UserController::class, 'delete_user']);
+Route::post('login', [UserController::class, 'login']);
+Route::post('register', [UserController::class, 'register']);
+Route::get('all_user', [UserController::class, 'all_user']);
+Route::delete('delete_user/{id}', [UserController::class, 'delete_user']);
+
+Route::get('ict', [UserController::class, 'ict']);

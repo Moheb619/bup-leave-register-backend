@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('applied_fors', function (Blueprint $table) {
             $table->id();
-            $table->string('department_name')->unique();
-            $table->string('department_short_details');
+            $table->foreignId('user_id_number')->constrained('users');
+            $table->foreignId('leave_id')->constrained('leaves');
+            $table->date('from');
+            $table->date('to');
+            $table->integer('duration');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('applied_fors');
     }
 };

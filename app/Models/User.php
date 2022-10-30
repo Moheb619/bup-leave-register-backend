@@ -54,12 +54,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // public function department()
-    // {
-    //     return $this->belongsTo(Department::class);
-    // }
-    // public function designation()
-    // {
-    //     return $this->belongsTo(Designation::class);
-    // }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class);
+    }
+    public function leaves_applied_for()
+    {
+        return $this->belongsToMany(Leave::class, 'applied_fors');
+    }
+    public function leaves_decided_by()
+    {
+        return $this->belongsToMany(Leave::class, 'decided_bies');
+    }
 }
