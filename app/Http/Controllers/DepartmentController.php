@@ -22,18 +22,35 @@ class DepartmentController extends Controller
 
         $department->delete();
 
-        response()->json([
+        return response()->json([
             "Message" => "Department Deleted Successfully"
         ]);
     }
     public function updateDepartment(Request $req, $id)
     {
-        $department = Department::where('id', $id);
-        $department->department_details=$req->department_name
+        $req->validate([
+            'department_name' => 'required',
+            'department_short_details' => 'required',
+        ]);
+        $department = Department::find($id);
+        $department->department_name=$req->department_name;
+        $department->department_short_details=$req->department_short_details;
         $department->save();
 
-        response()->json([
-            "Message" => "Department Updated Successfully"
+        return response()->json([
+            "Message" => "Department Updated Successfully",
+        ]);
+    }
+    public function addDepartment(Request $req)
+    {
+        $req->validate([
+            'department_name' => 'required',
+            'department_short_details' => 'required',
+        ]);
+        Department::create($req->post());
+
+        return response()->json([
+            "Message" => "Department Added Successfully",
         ]);
     }
 }

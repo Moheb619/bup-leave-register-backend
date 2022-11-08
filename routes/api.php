@@ -29,6 +29,7 @@ Route::delete('delete_user/{id}', [UserController::class, 'delete_user']);
 Route::get('ict', [UserController::class, 'ict']);
 
 // Department
+Route::post('addDepartment', [DepartmentController::class, 'addDepartment']);
 Route::get('getDepartments', [DepartmentController::class, 'getDepartments']);
 Route::delete('deleteDepartment/{id}', [DepartmentController::class, 'deleteDepartment']);
 Route::post('updateDepartment/{id}', [DepartmentController::class, 'updateDepartment']);
