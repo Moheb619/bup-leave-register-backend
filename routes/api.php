@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserController;
 use App\Models\Department;
 use Illuminate\Http\Request;
@@ -26,3 +27,8 @@ Route::get('all_user', [UserController::class, 'all_user']);
 Route::delete('delete_user/{id}', [UserController::class, 'delete_user']);
 
 Route::get('ict', [UserController::class, 'ict']);
+
+// Department
+Route::get('getDepartments', [DepartmentController::class, 'getDepartments']);
+Route::delete('deleteDepartment/{id}', [DepartmentController::class, 'deleteDepartment']);
+Route::post('updateDepartment/{id}', [DepartmentController::class, 'updateDepartment']);

@@ -65,6 +65,8 @@ class UserController extends Controller
         }
     }
 
+
+
     public function all_user()
     {
         $user = User::all();

@@ -11,7 +11,7 @@ class Department extends Model
 
     protected $fillable = [
         'department_name',
-        'department_short_description',
+        'department_short_details',
     ];
 
     public function users()
