@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DepartmentController extends Controller
 {
@@ -43,14 +44,25 @@ class DepartmentController extends Controller
     }
     public function addDepartment(Request $req)
     {
-        $req->validate([
-            'department_name' => 'required',
-            'department_short_details' => 'required',
+        $validator=Validator::make($req->all(), [
+
+            'department_name' =>'required|unique:departments',
+
+            'department_short_details' =>'required',
+
         ]);
+        if($validator->fails()){
+           
+            return response()->json([
+                "Message" => $validator->errors(),
+                "MessageColor"=>"text-danger"
+            ]);
+        }
         Department::create($req->post());
 
         return response()->json([
             "Message" => "Department Added Successfully",
+            "MessageColor"=>"text-success"
         ]);
     }
 }
