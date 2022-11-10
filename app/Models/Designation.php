@@ -12,7 +12,7 @@ class Designation extends Model
 
     protected $fillable = [
         'designation_name',
-        'designation_short_description',
+        'designation_short_details',
     ];
 
     public function users()

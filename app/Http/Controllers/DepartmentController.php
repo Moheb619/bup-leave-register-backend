@@ -29,9 +29,12 @@ class DepartmentController extends Controller
     }
     public function updateDepartment(Request $req, $id)
     {
-        $req->validate([
-            'department_name' => 'required',
-            'department_short_details' => 'required',
+        $validator=Validator::make($req->all(), [
+
+            'department_name' =>'required|unique:departments',
+
+            'department_short_details' =>'required',
+
         ]);
         $department = Department::find($id);
         $department->department_name=$req->department_name;
