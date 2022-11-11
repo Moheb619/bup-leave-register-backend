@@ -15,20 +15,23 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_number' => 'required|unique:App\Models\User',
+            'id' => 'required|unique:App\Models\User',
             'gender' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'age' => 'required',
             'email' => 'required|email|unique:App\Models\User',
             'contact' => 'required|unique:App\Models\User',
-            'profile' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'profile' => 'required',
             'department_id' => 'required',
             'designation_id' => 'required',
             'user_name' => 'required|unique:App\Models\User',
             'password' => 'required'
         ]);
-
+        $department=Department::where('department_name', '=', $request->department_id)->firstOrFail();
+        $designation=Designation::where('designation_name', '=', $request->designation_id)->firstOrFail();
+        $department_id=$department->id;
+        $designation_id=$designation->id;
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
@@ -36,15 +39,16 @@ class UserController extends Controller
         $profile_image_path = $request->file('profile')->store('profile_image', 'public');
 
         $input = $request->all();
-        $input["profile"] = $profile_image_path;
+        $input['department_id']=$department_id;
+        $input['designation_id']=$designation_id;
+        $input['profile'] = $profile_image_path;
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] =  $user->createToken('BUPLEAVEREGISTERBYMOHEB')->plainTextToken;
         $success['full_name'] =  $user->first_name . " " . $user->last_name;
-
         return response()->json([
-            "success" => "User Registered Successfully",
-            "message" => $success
+            "Message" => "User Registered Successfully",
+            "success" => $success
         ]);
     }
 
@@ -67,41 +71,60 @@ class UserController extends Controller
 
 
 
-    public function all_user()
+    public function getUsers()
     {
         $user = User::all();
         return response()->json([
             'user' => $user,
         ]);
     }
-    public function delete_user($id)
+    public function deleteUser($id)
     {
         $user = User::findOrFail($id);
         if ($user) {
             $user->delete();
             return response()->json([
                 "message" => "User Deleted Successfully",
-                "user" => $user
             ], 200);
         } else {
-            return "Delete Failed";
+            return response()->json([
+                "message" => "Deletation Failed",
+            ], 200);
         }
     }
-
-    public function department_user()
+    public function updateUser(Request $req, $id)
     {
-        $user = Department::find(1)->users;
+        $validator = Validator::make($req->all(), [
+            'id' => 'required|unique:App\Models\User',
+            'gender' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'age' => 'required',
+            'email' => 'required|email|unique:App\Models\User',
+            'contact' => 'required|unique:App\Models\User',
+            'profile' => 'required',
+            'department_id' => 'required',
+            'designation_id' => 'required',
+            'user_name' => 'required|unique:App\Models\User',
+            'password' => 'required'
+        ]);
+        $user = User::find($id);
+        $user->id = $req->id;
+        $user->gender = $req->gender;
+        $user->first_name = $req->first_name;
+        $user->last_name = $req->last_name;
+        $user->age = $req->age;
+        $user->email = $req->email;
+        $user->contact = $req->contact;
+        $user->profile = $req->profile;
+        $user->department_id = $req->department_id;
+        $user->designation_id = $req->designation_id;
+        $user->user_name = $req->user_name;
+        $user->password = $req->password;
+        $user->save();
 
         return response()->json([
-            'user' => $user,
-        ], 200);
-    }
-    public function designation_user()
-    {
-        $user = Designation::find(1)->users;
-
-        return response()->json([
-            'user' => $user,
-        ], 200);
+            "Message" => "Leave Updated Successfully",
+        ]);
     }
 }

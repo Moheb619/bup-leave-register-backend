@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 // User
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
-Route::get('all_user', [UserController::class, 'all_user']);
-Route::delete('delete_user/{id}', [UserController::class, 'delete_user']);
-Route::get('ict', [UserController::class, 'ict']);
+Route::get('getUsers', [UserController::class, 'getUsers']);
+Route::delete('deleteUser/{id}', [UserController::class, 'deleteUser']);
+Route::delete('updateUser/{id}', [UserController::class, 'updateUser']);
 
 // Department
 Route::post('addDepartment', [DepartmentController::class, 'addDepartment']);
