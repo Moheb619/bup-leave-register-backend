@@ -27,7 +27,7 @@ Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 Route::get('getUsers', [UserController::class, 'getUsers']);
 Route::delete('deleteUser/{id}', [UserController::class, 'deleteUser']);
-Route::delete('updateUser/{id}', [UserController::class, 'updateUser']);
+Route::post('updateUser/{id}', [UserController::class, 'updateUser']);
 
 // Department
 Route::post('addDepartment', [DepartmentController::class, 'addDepartment']);

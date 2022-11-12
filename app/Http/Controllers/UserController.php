@@ -28,10 +28,10 @@ class UserController extends Controller
             'user_name' => 'required|unique:App\Models\User',
             'password' => 'required'
         ]);
-        $department=Department::where('department_name', '=', $request->department_id)->firstOrFail();
-        $designation=Designation::where('designation_name', '=', $request->designation_id)->firstOrFail();
-        $department_id=$department->id;
-        $designation_id=$designation->id;
+        $department = Department::where('department_name', '=', $request->department_id)->firstOrFail();
+        $designation = Designation::where('designation_name', '=', $request->designation_id)->firstOrFail();
+        $department_id = $department->id;
+        $designation_id = $designation->id;
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
@@ -39,8 +39,8 @@ class UserController extends Controller
         $profile_image_path = $request->file('profile')->store('profile_image', 'public');
 
         $input = $request->all();
-        $input['department_id']=$department_id;
-        $input['designation_id']=$designation_id;
+        $input['department_id'] = $department_id;
+        $input['designation_id'] = $designation_id;
         $input['profile'] = $profile_image_path;
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
@@ -73,24 +73,20 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        $user = User::all();
+        $users = User::all();
         return response()->json([
-            'user' => $user,
+            'users' => $users,
         ]);
     }
     public function deleteUser($id)
     {
-        $user = User::findOrFail($id);
-        if ($user) {
-            $user->delete();
-            return response()->json([
-                "message" => "User Deleted Successfully",
-            ], 200);
-        } else {
-            return response()->json([
-                "message" => "Deletation Failed",
-            ], 200);
-        }
+        $user = User::where('id', $id);
+
+        $user->delete();
+
+        return response()->json([
+            "Message" => "User Deleted Successfully"
+        ]);
     }
     public function updateUser(Request $req, $id)
     {
@@ -105,9 +101,14 @@ class UserController extends Controller
             'profile' => 'required',
             'department_id' => 'required',
             'designation_id' => 'required',
-            'user_name' => 'required|unique:App\Models\User',
-            'password' => 'required'
+            'user_name' => 'required|unique:App\Models\User'
         ]);
+
+        $department = Department::where('department_name', '=', $req->department_id)->firstOrFail();
+        $designation = Designation::where('designation_name', '=', $req->designation_id)->firstOrFail();
+        $department_id = $department->id;
+        $designation_id = $designation->id;
+
         $user = User::find($id);
         $user->id = $req->id;
         $user->gender = $req->gender;
@@ -117,10 +118,9 @@ class UserController extends Controller
         $user->email = $req->email;
         $user->contact = $req->contact;
         $user->profile = $req->profile;
-        $user->department_id = $req->department_id;
-        $user->designation_id = $req->designation_id;
+        $user->department_id = $department_id;
+        $user->designation_id = $designation_id;
         $user->user_name = $req->user_name;
-        $user->password = $req->password;
         $user->save();
 
         return response()->json([
